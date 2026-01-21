@@ -1,0 +1,18 @@
+# Virtual environment
+venv/
+
+
+# Python
+__pycache__/
+*.pyc 
+
+
+# Django
+db.sqlite3
+.env 
+staticfiles/
+
+
+# OS /editor
+.DS_Store
+.vscode/
