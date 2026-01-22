@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+</head>
+<body>
+  <h1>Create account</h1>
+
+  {% if form.errors %}
+    <div>
+      <h3>Errors:</h3>
+      {{ form.errors }}
+    </div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+  </form>
+</body>
+</html>

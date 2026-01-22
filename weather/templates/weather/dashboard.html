@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <p>Only logged-in users can see this.</p>
+
+  <p><a href="{% url 'home' %}">Home</a></p>
+  <p><a href="{% url 'accounts:logout' %}">Logout</a></p>
+</body>
+</html>

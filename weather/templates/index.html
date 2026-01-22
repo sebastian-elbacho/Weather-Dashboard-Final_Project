@@ -9,6 +9,15 @@
 <body>
    <h1>Weather Dashboard</h1>
    <p>The application works!</p>
+
+
+    {% if user.is_authenticated %}
+        <p>Logged in as: {{ user.username }}</p>
+        <a href="{% url 'accounts:logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'accounts:login' %}">Login</a>
+        <a href="{% url 'accounts:register' %}">Register</a>
+    {% endif %}
     
 </body>
 </html>
