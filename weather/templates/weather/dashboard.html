@@ -5,9 +5,26 @@
 </head>
 <body>
   <h1>Dashboard</h1>
-  <p>Only logged-in users can see this.</p>
 
-  <p><a href="{% url 'home' %}">Home</a></p>
-  <p><a href="{% url 'accounts:logout' %}">Logout</a></p>
+  <form method="get">
+    <label for="city">City:</label>
+    <input id="city" name="city" value="{{ city }}" placeholder="e.g. Dublin" />
+    <button type="submit">Search</button>
+  </form>
+
+  <p><a href="{% url 'home' %}">Home</a> | <a href="{% url 'accounts:logout' %}">Logout</a></p>
+
+  {% if error %}
+    <p style="color: red;"><strong>{{ error }}</strong></p>
+  {% endif %}
+
+  {% if location and weather %}
+    <h2>Weather for {{ location.name }}{% if location.country %}, {{ location.country }}{% endif %}</h2>
+    <ul>
+      <li>Temperature: {{ weather.temperature_2m }} °C</li>
+      <li>Wind speed: {{ weather.wind_speed_10m }} km/h</li>
+      <li>Time: {{ weather.time }}</li>
+    </ul>
+  {% endif %}
 </body>
 </html>
