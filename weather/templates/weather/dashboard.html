@@ -1,30 +1,111 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Dashboard</title>
-</head>
-<body>
-  <h1>Dashboard</h1>
+{% extends "base.html" %}
 
-  <form method="get">
-    <label for="city">City:</label>
-    <input id="city" name="city" value="{{ city }}" placeholder="e.g. Dublin" />
-    <button type="submit">Search</button>
-  </form>
+{% block title %}Dashboard{% endblock %}
 
-  <p><a href="{% url 'home' %}">Home</a> | <a href="{% url 'accounts:logout' %}">Logout</a></p>
+{% block content %}
 
-  {% if error %}
-    <p style="color: red;"><strong>{{ error }}</strong></p>
-  {% endif %}
+<div class="max-w-xl mx-auto">
 
-  {% if location and weather %}
-    <h2>Weather for {{ location.name }}{% if location.country %}, {{ location.country }}{% endif %}</h2>
-    <ul>
-      <li>Temperature: {{ weather.temperature_2m }} °C</li>
-      <li>Wind speed: {{ weather.wind_speed_10m }} km/h</li>
-      <li>Time: {{ weather.time }}</li>
-    </ul>
-  {% endif %}
-</body>
-</html>
+    <div class="bg-white rounded-xl shadow p-6 mb-6">
+        <h1 class="text-2xl font-semibold mb-4">Weather Dashboard</h1>
+
+        <form method="get" class="flex gap-3">
+            <input
+                type="text"
+                name="city"
+                value="{{ city }}"
+                placeholder="Enter city (e.g. Dublin)"
+                class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+            <button
+                type="submit"
+                class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
+            >
+                Search
+            </button>
+        </form>
+
+        {% if error %}
+            <p class="text-red-600 mt-4">{{ error }}</p>
+        {% endif %}
+    </div>
+
+
+    
+
+
+        {% if choices and not weather %}                
+      <div class="bg-white rounded-xl shadow p-6 mb-6">
+        <h2 class="text-lg font-semibold mb-3">Did you mean?</h2>
+
+        <div class="space-y-2">
+          {% for c in choices %}
+            <a
+              class="block border rounded-lg px-4 py-3 hover:bg-slate-50"
+              href="{% url 'dashboard' %}?city={{ c.name|urlencode }}{% if c.admin1 %}, {{ c.admin1|urlencode }}{% endif %}{% if c.country %}, {{ c.country|urlencode }}{% endif %}&lat={{ c.latitude }}&lon={{ c.longitude }}"
+            >
+              <div class="font-medium">
+                {{ c.name }}
+                {% if c.admin1 %} — {{ c.admin1 }}{% endif %}
+                {% if c.country %} ({{ c.country }}){% endif %}
+              </div>
+              <div class="text-sm text-slate-500">
+                lat: {{ c.latitude }}, lon: {{ c.longitude }}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+
+
+    
+
+
+    {% if location and weather %}
+      <div class="bg-white rounded-xl shadow p-6 mb-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-semibold">
+        {{ location.name }}{% if location.country %}, {{ location.country }}{% endif %}
+      </h2>
+
+      {% if weather.is_day == 1 %}
+        <span class="text-xs bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">Day</span>
+      {% else %}
+        <span class="text-xs bg-slate-200 text-slate-700 px-3 py-1 rounded-full">Night</span>
+      {% endif %}
+    </div>
+
+    <p class="text-sm text-slate-500 mt-2">Updated: {{ weather.time }}</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-slate-500">Temperature</p>
+      <p class="text-3xl font-bold mt-2">{{ weather.temperature_2m }} °C</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-slate-500">Feels like</p>
+      <p class="text-3xl font-bold mt-2">{{ weather.apparent_temperature }} °C</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-slate-500">Humidity</p>
+      <p class="text-3xl font-bold mt-2">{{ weather.relative_humidity_2m }}%</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-slate-500">Wind speed</p>
+      <p class="text-3xl font-bold mt-2">{{ weather.wind_speed_10m }} km/h</p>
+    </div>
+  </div>
+   
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+

@@ -1,32 +1,31 @@
 import requests
 
 
-def geocode_city(city: str) -> dict | None:
-    """
-    Zamienia nazwę miasta na współrzędne (lat/lon) używając Open-Meteo Geocoding API.
-    Zwraca dict z lat/lon/name/country albo None jeśli brak wyników.
-    """
+def geocode_city(city: str) -> list[dict]:
     city = (city or "").strip()
     if not city:
-        return None
+        return []
 
     url = "https://geocoding-api.open-meteo.com/v1/search"
-    params = {"name": city, "count": 1, "language": "en", "format": "json"}
+    params = {"name": city, "count": 5, "language": "en", "format": "json"}
     r = requests.get(url, params=params, timeout=10)
     r.raise_for_status()
     data = r.json()
 
     results = data.get("results") or []
-    if not results:
-        return None
+    choices = []
+    for item in results:
+        choices.append({
+            "name": item.get("name"),
+            "country": item.get("country"),
+            "admin1": item.get("admin1"),  # region/voivodeship/state (czasem jest)
+            "latitude": item.get("latitude"),
+            "longitude": item.get("longitude"),
+        })
+    return choices
 
-    item = results[0]
-    return {
-        "name": item.get("name"),
-        "country": item.get("country"),
-        "latitude": item.get("latitude"),
-        "longitude": item.get("longitude"),
-    }
+
+
 
 
 def fetch_current_weather(latitude: float, longitude: float) -> dict:
@@ -37,7 +36,8 @@ def fetch_current_weather(latitude: float, longitude: float) -> dict:
     params = {
         "latitude": latitude,
         "longitude": longitude,
-        "current": "temperature_2m,wind_speed_10m",
+        "current": "temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,is_day,weather_code",
+
     }
     r = requests.get(url, params=params, timeout=10)
     r.raise_for_status()
@@ -45,7 +45,13 @@ def fetch_current_weather(latitude: float, longitude: float) -> dict:
 
     current = data.get("current") or {}
     return {
-        "temperature_2m": current.get("temperature_2m"),
-        "wind_speed_10m": current.get("wind_speed_10m"),
-        "time": current.get("time"),
-    }
+    "temperature_2m": current.get("temperature_2m"),
+    "apparent_temperature": current.get("apparent_temperature"),
+    "relative_humidity_2m": current.get("relative_humidity_2m"),
+    "wind_speed_10m": current.get("wind_speed_10m"),
+    "is_day": current.get("is_day"),
+    "time": current.get("time"),
+    "weather_code": current.get("weather_code"),
+
+}
+
