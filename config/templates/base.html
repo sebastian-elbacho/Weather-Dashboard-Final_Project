@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +9,23 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+<style>
+  .theme-default { background-image: linear-gradient(to bottom, #e2e8f0, #f8fafc); }
+
+  .theme-clear   { background-image: url("{% static 'bg/clear.jpg' %}"); }
+  .theme-cloudy  { background-image: url("{% static 'bg/cloudy.jpg' %}"); }
+  .theme-rain    { background-image: url("{% static 'bg/rain.jpg' %}"); }
+  .theme-snow    { background-image: url("{% static 'bg/snow.jpg' %}"); }
+  .theme-storm   { background-image: url("{% static 'bg/storm.jpg' %}"); }
+  .theme-fog     { background-image: url("{% static 'bg/fog.jpg' %}"); }
+  .theme-drizzle { background-image: url("{% static 'bg/drizzle.jpg' %}"); }
+</style>
+
+
 </head>
 
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col text-slate-800 bg-cover bg-center {% if theme %}theme-{{ theme }}{% else %}theme-default{% endif %}">
+
 
 <header class="bg-white shadow">
     <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
