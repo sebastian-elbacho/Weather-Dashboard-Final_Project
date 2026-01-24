@@ -24,7 +24,7 @@ def dashboard(request):
             else:
                 weather = fetch_current_weather(location["latitude"], location["longitude"])
         except Exception:
-            error = "Weather service error. Please try again."
+            error = f"Weather service error: {e}"
 
     context = {
         "city": city,

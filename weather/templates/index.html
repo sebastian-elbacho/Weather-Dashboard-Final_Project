@@ -1,23 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Dashboard</title>
-   
-</head>
-<body>
-   <h1>Weather Dashboard</h1>
-   <p>The application works!</p>
 
+{% extends "base.html" %}
+
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Weather Dashboard</h1>
+    <p>The application works!</p>
 
     {% if user.is_authenticated %}
-        <p>Logged in as: {{ user.username }}</p>
-        <a href="{% url 'accounts:logout' %}">Logout</a>
+        <p>You are logged in. Go to your dashboard.</p>
+        <a href="{% url 'dashboard' %}">Go to Dashboard</a>
     {% else %}
-        <a href="{% url 'accounts:login' %}">Login</a>
-        <a href="{% url 'accounts:register' %}">Register</a>
+        <p>Please log in or register.</p>
     {% endif %}
-    
-</body>
-</html>
+{% endblock %}
