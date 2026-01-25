@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
-from .services import geocode_city, fetch_current_weather
+from .services import geocode_city, fetch_current_weather, fetch_daily_forecast
 
 
 def weather_theme(weather_code) -> str:
@@ -38,7 +38,8 @@ def dashboard(request):
     city = (request.GET.get("city") or "").strip()
     lat = request.GET.get("lat")
     lon = request.GET.get("lon")
-
+    
+    forecast = []
     weather = None
     location = None
     choices = []
@@ -53,6 +54,8 @@ def dashboard(request):
             weather = fetch_current_weather(latitude, longitude)
 
             theme = weather_theme(weather.get("weather_code"))
+            forecast = fetch_daily_forecast(latitude, longitude)
+
 
             location = {
                 "name": city, 
@@ -80,5 +83,6 @@ def dashboard(request):
         "choices": choices,
         "error": error,
         "theme": theme,
+        "forecast": forecast,
     }
     return render(request, "weather/dashboard.html", context)

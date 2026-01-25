@@ -55,3 +55,38 @@ def fetch_current_weather(latitude: float, longitude: float) -> dict:
 
 }
 
+
+def fetch_daily_forecast(latitude: float, longitude: float) -> list[dict]:
+    """
+    Forecast na 5 dni: min/max temperatura + opady
+    """
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": latitude,
+        "longitude": longitude,
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum",
+        "forecast_days": 5,
+        "timezone": "auto",
+    }
+    r = requests.get(url, params=params, timeout=10)
+    r.raise_for_status()
+    data = r.json()
+
+    daily = data.get("daily") or {}
+    dates = daily.get("time") or []
+    tmax = daily.get("temperature_2m_max") or []
+    tmin = daily.get("temperature_2m_min") or []
+    rain = daily.get("precipitation_sum") or []
+
+    forecast = []
+    for i in range(min(len(dates), len(tmax), len(tmin), len(rain))):
+        forecast.append({
+            "date": dates[i],
+            "tmax": tmax[i],
+            "tmin": tmin[i],
+            "rain": rain[i],
+        })
+
+    return forecast
+
+
