@@ -26,10 +26,7 @@
 
 <body class="min-h-screen flex flex-col text-slate-800 bg-cover bg-center {% if theme %}theme-{{ theme }}{% else %}theme-default{% endif %}">
 
-{# TEST #}
-<div class="fixed bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded text-sm z-50">
-  theme: {{ theme }}
-</div>
+
 
 
 
@@ -48,9 +45,15 @@
                 <a href="{% url 'dashboard' %}" class="text-blue-600 hover:underline">
                     Dashboard
                 </a>
-                <a href="{% url 'accounts:logout' %}" class="text-red-500 hover:underline">
-                    Logout
-                </a>
+
+                <form method="post" action="{% url 'accounts:logout' %}" class="inline">
+                   {% csrf_token %}
+                   <button type="submit" class="text-red-500 hover:underline">
+                     Logout
+                   </button>
+                </form>
+
+               
             {% else %}
                 <a href="{% url 'accounts:login' %}" class="text-blue-600 hover:underline">
                     Login
