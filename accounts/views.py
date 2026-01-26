@@ -13,3 +13,8 @@ def register(request):
 
     return render(request, "accounts/register.html", {"form": form})
 
+# LOGOUT =>
+
+
+def logged_out(request):
+    return render(request, "accounts/logged_out.html")

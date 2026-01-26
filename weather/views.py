@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
 from .services import geocode_city, fetch_current_weather, fetch_daily_forecast
+from .models import SearchHistory
 
 
 def weather_theme(weather_code) -> str:
@@ -38,6 +39,7 @@ def dashboard(request):
     city = (request.GET.get("city") or "").strip()
     lat = request.GET.get("lat")
     lon = request.GET.get("lon")
+
     
     forecast = []
     weather = None
@@ -45,6 +47,9 @@ def dashboard(request):
     choices = []
     error = None
     theme = "default"
+
+   
+           
 
     # Jeśli użytkownik kliknął konkretną lokalizację (mamy lat/lon) → pobieramy pogodę
     if city and lat and lon:
@@ -56,7 +61,17 @@ def dashboard(request):
             theme = weather_theme(weather.get("weather_code"))
             forecast = fetch_daily_forecast(latitude, longitude)
 
+            # zapis historii wyszukiwań
+            SearchHistory.objects.create(
+              user=request.user,
+              query=city,
+              latitude=latitude,
+              longitude=longitude,
+            )
 
+       
+
+            
             location = {
                 "name": city, 
                 "country": None, 
@@ -66,6 +81,8 @@ def dashboard(request):
                 }
         except Exception:
             error = "Weather service error. Please try again."
+            theme = "default"
+            forecast =[]
 
     # Jeśli użytkownik wpisał tylko nazwę miasta → pokazujemy listę propozycji
     elif city:
@@ -75,6 +92,9 @@ def dashboard(request):
                 error = "City not found. Try another name."
         except Exception:
             error = "Geocoding error. Please try again."
+        
+        
+    history = SearchHistory.objects.filter(user=request.user)[:8]
 
     context = {
         "city": city,
@@ -84,5 +104,6 @@ def dashboard(request):
         "error": error,
         "theme": theme,
         "forecast": forecast,
+        "history": history,
     }
     return render(request, "weather/dashboard.html", context)
