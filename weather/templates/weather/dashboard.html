@@ -6,7 +6,8 @@
 <div class="max-w-xl mx-auto">
 
   <!-- SEARCH CARD -->
-  <div class="bg-white rounded-xl shadow p-6 mb-6">
+  <div class="bg-white/80 backdrop-blur border border-white/30 rounded-2xl shadow p-6 mb-6">
+
     <h1 class="text-2xl font-semibold mb-4">Weather Dashboard</h1>
 
     <form method="get" class="flex gap-3">
@@ -32,13 +33,14 @@
 
   <!-- LOCATION CHOICES -->
   {% if choices and not weather %}
-    <div class="bg-white rounded-xl shadow p-6 mb-6">
+    <div class="bg-white/80 backdrop-blur border border-white/30 rounded-2xl shadow p-6 mb-6">
+
       <h2 class="text-lg font-semibold mb-3">Did you mean?</h2>
 
       <div class="space-y-2">
         {% for c in choices %}
           <a
-            class="block border rounded-lg px-4 py-3 hover:bg-slate-50"
+            class="block border rounded-lg px-4 py-3 hover:bg-white/60"
             href="{% url 'dashboard' %}?city={{ c.name|urlencode }}{% if c.admin1 %}, {{ c.admin1|urlencode }}{% endif %}{% if c.country %}, {{ c.country|urlencode }}{% endif %}&lat={{ c.latitude }}&lon={{ c.longitude }}"
           >
             <div class="font-medium">
@@ -58,7 +60,8 @@
   <!-- CURRENT WEATHER + FORECAST -->
   {% if location and weather %}
 
-    <div class="bg-white rounded-xl shadow p-6 mb-6">
+    <div class="bg-white/80 backdrop-blur border border-white/30 rounded-2xl shadow p-6 mb-6">
+
       <div class="flex items-center justify-between">
         <h2 class="text-xl font-semibold">
           {{ location.name }}{% if location.country %}, {{ location.country }}{% endif %}
@@ -75,22 +78,26 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div class="bg-white rounded-xl shadow p-6">
+      <div class="bg-white/80 backdrop-blur border border-white/30 rounded-2xl shadow p-6">
+
         <p class="text-sm text-slate-500">Temperature</p>
         <p class="text-3xl font-bold mt-2">{{ weather.temperature_2m }} °C</p>
       </div>
 
-      <div class="bg-white rounded-xl shadow p-6">
+      <div class="bg-white/80 backdrop-blur border border-white/30 rounded-2xl shadow p-6">
+
         <p class="text-sm text-slate-500">Feels like</p>
         <p class="text-3xl font-bold mt-2">{{ weather.apparent_temperature }} °C</p>
       </div>
 
-      <div class="bg-white rounded-xl shadow p-6">
+      <div class="bg-white/80 backdrop-blur border border-white/30 rounded-2xl shadow p-6">
+
         <p class="text-sm text-slate-500">Humidity</p>
         <p class="text-3xl font-bold mt-2">{{ weather.relative_humidity_2m }}%</p>
       </div>
 
-      <div class="bg-white rounded-xl shadow p-6">
+      <div class="bg-white/80 backdrop-blur border border-white/30 rounded-2xl shadow p-6">
+
         <p class="text-sm text-slate-500">Wind speed</p>
         <p class="text-3xl font-bold mt-2">{{ weather.wind_speed_10m }} km/h</p>
       </div>
@@ -104,7 +111,8 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {% for day in forecast %}
-            <div class="bg-white/90 backdrop-blur rounded-xl shadow p-4 text-center">
+            <div class="bg-white/80 backdrop-blur border border-white/30 rounded-2xl shadow p-4 text-center">
+
               <p class="text-sm text-slate-500">{{ day.date }}</p>
               <p class="text-2xl font-bold mt-2">{{ day.tmax }}°C</p>
               <p class="text-sm text-slate-600">Min: {{ day.tmin }}°C</p>
