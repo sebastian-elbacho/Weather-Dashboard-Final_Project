@@ -5,14 +5,16 @@ venv/
 # Python
 __pycache__/
 *.pyc 
+*.pyo
 
 
 # Django
 db.sqlite3
 .env 
 staticfiles/
+*.log
 
 
 # OS /editor
 .DS_Store
-.vscode/
+.vscode/ 
