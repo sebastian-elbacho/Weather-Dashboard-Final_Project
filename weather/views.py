@@ -30,8 +30,11 @@ def weather_theme(weather_code) -> str:
     return "default"
 
 
+# Tlo w widokach ponizej w, index() return render =>
 def index(request):
-    return render(request, "index.html")
+    return render(request, "index.html", {
+        "body_class": "bg-home",
+    })
 
 
 @login_required
@@ -105,5 +108,7 @@ def dashboard(request):
         "theme": theme,
         "forecast": forecast,
         "history": history,
+        "theme": theme,
+        "body_class": f"theme-{theme}",
     }
     return render(request, "weather/dashboard.html", context)

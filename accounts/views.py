@@ -12,13 +12,13 @@ def register(request):
     else:
         form = UserCreationForm()
 
-    return render(request, "accounts/register.html", {"form": form})
+    return render(request, "accounts/register.html", {"form": form, "body_class": "bg-auth",})
 
 # LOGOUT =>
 
 
 def logged_out(request):
-    return render(request, "accounts/logged_out.html")
+    return render(request, "accounts/logged_out.html", {"body_class": "bg-auth",})
 
 
 # FUNKCJA REGISTER =>
@@ -32,4 +32,5 @@ def register(request):
     else:
         form = RegisterForm()
 
-    return render(request, "accounts/register.html", {"form": form})
+    return render(request, "accounts/register.html", {"form": form, "body_class": "bg-auth",})
+                                                    

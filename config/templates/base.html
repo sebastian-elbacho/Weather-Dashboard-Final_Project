@@ -19,12 +19,34 @@
   .theme-storm   { background-image: url("{% static 'bg/storm.jpg' %}"); }
   .theme-fog     { background-image: url("{% static 'bg/fog.jpg' %}"); }
   .theme-drizzle { background-image: url("{% static 'bg/drizzle.jpg' %}"); }
+
+  
+  .bg-auth {
+    background: linear-gradient(
+      135deg,
+      #3b82f6 0%,
+      #6366f1 40%,
+      #9333ea 100%
+    );
+  }
+
+  .bg-home {
+    background: linear-gradient(
+      135deg,
+      #0ea5e9 0%,
+      #38bdf8 40%,
+      #22d3ee 100%
+    );
+  }
+
+
 </style>
 
 
 </head>
 
-<body class="min-h-screen flex flex-col text-slate-800 bg-cover bg-center {% if theme %}theme-{{ theme }}{% else %}theme-default{% endif %}">
+<body class="min-h-screen flex flex-col text-slate-800 bg-cover bg-center {{ body_class|default:'' }}">
+
 <div class="fixed inset-0 bg-black/35 -z-10"></div>
 
 
