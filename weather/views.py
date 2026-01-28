@@ -108,7 +108,6 @@ def dashboard(request):
         "theme": theme,
         "forecast": forecast,
         "history": history,
-        "theme": theme,
         "body_class": f"theme-{theme}",
     }
     return render(request, "weather/dashboard.html", context)
