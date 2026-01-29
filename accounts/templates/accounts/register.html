@@ -10,6 +10,24 @@
     <form method="post" class="space-y-4">
       {% csrf_token %}
 
+
+      <div>
+  <label class="block text-sm font-medium mb-1">Name</label>
+  {{ form.first_name }}
+  {% if form.first_name.errors %}
+    <p class="text-red-600 text-sm mt-1">{{ form.first_name.errors }}</p>
+  {% endif %}
+</div>
+
+<div>
+  <label class="block text-sm font-medium mb-1">Email</label>
+  {{ form.email }}
+  {% if form.email.errors %}
+    <p class="text-red-600 text-sm mt-1">{{ form.email.errors }}</p>
+  {% endif %}
+</div>
+
+
       {% if form.non_field_errors %}
         <div class="text-red-600 text-sm">
           {{ form.non_field_errors }}
