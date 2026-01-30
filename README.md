@@ -35,6 +35,12 @@ The API is used to fetch real-time weather data based on user input.
 - PostgreSQL (production – Render)
 - requests (external API calls)
 
+
+```md
+## Project Architecture
+The application follows Django’s Model–View–Template (MVT) architecture and uses
+environment-based configuration for local development and production deployment.
+
 ---
 
 ## Requirements
@@ -49,6 +55,12 @@ The API is used to fetch real-time weather data based on user input.
 3. Install dependencies
 4. Run migrations
 5. Start the development server
+
+
+## Automated Testing
+Run tests with:
+  ```bash
+python manage.py test
 
 
 
