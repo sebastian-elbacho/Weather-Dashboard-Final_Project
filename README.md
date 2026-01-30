@@ -1,5 +1,6 @@
 # Weather Dashboard / UCD Assignment (31.01.2026)
 ## Live Demo
+
 https://weather-dashboard-final-project.onrender.com
 
 
@@ -49,12 +50,16 @@ The API is used to fetch real-time weather data based on user input.
 4. Run migrations
 5. Start the development server
 
+
+
 ```bash
 python -m venv venv
 source venv/bin/activate  # macOS/Linux
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+
+
 
 
 
