@@ -7,7 +7,7 @@ from django.conf import settings
 
 class SearchHistory(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="weather_searches")
-    query = models.CharField(max_length=120)  # np. "Dublin, Leinster, Ireland"
+    query = models.CharField(max_length=120)  # <== np. "Dublin, Leinster, Ireland <=="
     latitude = models.FloatField()
     longitude = models.FloatField()
 
