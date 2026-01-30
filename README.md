@@ -1,4 +1,7 @@
 # Weather Dashboard / UCD Assignment (31.01.2026)
+## Live Demo
+https://weather-dashboard-final-project.onrender.com
+
 
 Django web application with user authentication and a personalized weather dashboard built using Django Templates.
 
@@ -52,3 +55,41 @@ source venv/bin/activate  # macOS/Linux
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+
+
+
+## Environment Variables
+
+### Local Development
+- DJANGO_SECRET_KEY
+- DJANGO_DEBUG=True
+- DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+
+### Production (Render)
+- DJANGO_SECRET_KEY
+- DJANGO_DEBUG=False
+- DJANGO_ALLOWED_HOSTS=weather-dashboard-final-project.onrender.com
+- CSRF_TRUSTED_ORIGINS=https://weather-dashboard-final-project.onrender.com
+- DATABASE_URL (Render PostgreSQL)
+
+
+## Deployment (Render)
+
+The application is deployed using Render Web Service and PostgreSQL.
+
+### Build Command
+pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+
+### Start Command
+gunicorn config.wsgi:application
+
+
+## Static Files
+
+Static files (CSS, images, background JPGs) are served in production using WhiteNoise.
+
+
+## Hosting Compatibility
+
+The application is fully compatible with Render hosting requirements and uses
+environment variables, Gunicorn, PostgreSQL, and WhiteNoise for production deployment.
